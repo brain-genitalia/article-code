@@ -1,72 +1,27 @@
-function [ reducingData , resStruct] = getReducingData( data , method , explore , epsilon , mu)
+function [ reducingData ] = getReducingData( data , method , epsilon , mu)
 
-if ~exist('explore' , 'var' )
-    explore = 0;
-end
-
-[ reducingData , resStruct]= reducing( data , method , explore , epsilon , mu);
+reducingData = reducing( data , method , epsilon , mu);
 
 end
 
 
-function [ reducingData , resStruct ]= reducing( data , method , explore , epsilon , mu)
-resStruct = [];
+function reducingData = reducing( data , method , epsilon , mu)
 switch method
     case 'none'
         reducingData = data ;
     case 'pca'
-        [ ~ , reducingData , latent , ~ , explained  ] = pca(data);
-        resStruct.reducingData = reducingData;
-        if explore
-            exploring( latent );
-        end
+        [ ~ , reducingData , ~ , ~ , ~  ] = pca(data);
     case 'dm'
         dists = pdist2( data , data );
-%         dists = dists / max( dists(:));
-        [ resStruct.reducingData , resStruct.eigenValuesReduce ] = DM( dists , epsilon );
-        if explore
-            exploring( diag( DD ) );
-        end
-        reducingData = resStruct.reducingData;
-    case 'dmC'
-        dists = pdist2( data , data , 'correlation' );
-%         dists = dists / max( dists(:));
-        [ resStruct.reducingData , resStruct.eigenValuesReduce ] = DM( dists , epsilon );
-        if explore
-            exploring( diag( DD ) );
-        end
-        reducingData = resStruct.reducingData;
+        reducingData = DM( dists , epsilon );
     case 'ICPQR'
-        [resStruct.reducingData, pi, s, FMdict, resStruct.dict , resStruct.fullMap , ...
-            resStruct.disortion ] = ICPQR_DM(data,epsilon,mu);
-        reducingData = resStruct.reducingData;
+        reducingData = ICPQR_DM(data,epsilon,mu);
     case 'ICPQR_data'
-        [reducingData, resStruct.dict , ...
-            resStruct.disortion ] = ICPQR(data',mu);
-        resStruct.reducingData = reducingData';
+        reducingData = ICPQR(data',mu);
         reducingData = reducingData';
-%         if explore
-%             exploring( diag( s ) );
-%         end
     case 'PDME'
-        [A,B, resStruct.reducingData,resStruct.dict,Iord,resStruct.eigenValuesRed , resStruct.distortion] = PDMEmbedding_Opt_MRG_v2...
+        [~,~, reducingData] = PDMEmbedding_Opt_MRG_v2...
             (data , epsilon , mu);
-        reducingData = resStruct.reducingData;
-        if explore
-            exploring( diag( s ) );
-        end
 end
-
-end
-
-function exploring ( eigen  )
-% exploring the eigen values
-
-figure
-plot( eigen / max( eigen ) );
-title('EIgen values ( after divide by the largest eigen value )');
-% figure
-% plot( cumsum( eigen ) / sum( eigen ) );
-% title('CDF of the eigen values');
 
 end

@@ -5,11 +5,6 @@ difx = diff( [ 1 : length( vals ) ] / length( vals ) );
 
 m = dify' ./ -difx;
 
-% figure; hold on; plot( [ 1 : length( vals ) ] / length( vals ) , vals , 'b.' )
-% plot( 42/length( vals ) , vals( dim ) , 'ro' , 'MarkerSize' , 20)
-% xlabel( 'normalized index');
-% ylabel( 'normalized eigenvalues');
-
 windowSize = 3;
 if length( vals ) < 3 * windowSize
     dim = length( vals );

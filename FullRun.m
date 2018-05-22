@@ -55,25 +55,6 @@ for iter = [6 2 1 16 19 21 20 ]
         setName = 'Cortical_corrected';
     end
     readData;
-    
-    names{length(names) + 1 } = setName;
-    mkdir( setName );
-    mkdir( fullfile( setName , 'data' ) );
-    mkdir( fullfile( setName , 'imagesNew' ) );
-    mkdir( fullfile( setName , 'imagesNew' , 'supervised') );
-    mkdir( fullfile( setName , 'imagesNew' , 'clustering') );
-    mkdir( fullfile( setName , 'imagesNew' , 'anomaly detection') );
-    mkdir( fullfile( setName , 'imagesNew' , 'example') );
-    mkdir( fullfile( setName , 'imagesNew' , 'general') );
-    if iter == 1
-        mkdir( fullfile( setName , 'imagesVolume' ) );
-        mkdir( fullfile( setName , 'imagesVolume' , 'supervised') );
-        mkdir( fullfile( setName , 'imagesVolume' , 'clustering') );
-        mkdir( fullfile( setName , 'imagesVolume' , 'anomaly detection') );
-        mkdir( fullfile( setName , 'imagesVolume' , 'example') );
-        mkdir( fullfile( setName , 'imagesVolume' , 'general') );
-    end
-    
     originalData = allData;
     originalGroups = allGroups;
     if strcmp( setName , 'GSP_volume' )
@@ -85,18 +66,7 @@ for iter = [6 2 1 16 19 21 20 ]
             save( fullfile( setName , ['allDataGroupsOriginal.mat' ] ) ,'allFullSize', 'allData' , 'allGroups' );
         else
             save( fullfile( setName , ['allDataGroupsOriginal.mat' ] ) , 'allData' , 'allGroups' );
-        end
-        for i = 1 : 9
-            ind = randperm( length( allGroups ) );
-            allGroups = originalGroups( ind );
-            allData = originalData( ind , : );
-            if strcmp( setName , 'GSP_volume' );
-                allFullSize = originalFullSize( ind );
-                save( fullfile( setName , ['allDataGroupsRandomized' , num2str(i) , '.mat' ] ) , 'allData' , 'allGroups' , 'allFullSize' , 'ind' );
-            else
-                save( fullfile( setName , ['allDataGroupsRandomized' , num2str(i) , '.mat' ] ) , 'allData' , 'allGroups' , 'ind' );
-            end
-        end
+        end        
     end
     if iter == 1
         MainUnsupervised;
@@ -116,4 +86,4 @@ end
 
 %% supervise
 MainSupervisedAllWithAges
-
+sandboxSupervised
