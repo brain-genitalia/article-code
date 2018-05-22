@@ -7,51 +7,25 @@ fullTable = cell(0) ;
 chanceTable =[ ];
 MAX_DIM = [];
 names = cell(0);
-for iter = [6 2 1 16 19 21 20 ]
+for iter = 1:9
     %%
-    if iter == 0
-        setName = 'GSP_volume_divide';
-    elseif iter == 1
+    if iter == 1
         setName = 'GSP_volume';
     elseif iter == 2
         setName = 'GSP_thickness' ;
     elseif iter == 3
         setName = 'monkeys';
     elseif iter == 4
-        setName = 'monkeys3';
-    elseif iter == 5
         setName = 'connectome_VBM';
-    elseif iter == 6
+    elseif iter == 5
         setName = 'GSP_VBM';
-    elseif iter == 7
-        setName = 'israel';
-    elseif iter == 8
-        setName = 'beijing';
-    elseif iter == 9
-        setName = 'cambridge';
-    elseif iter == 10
-        setName = 'zirich';
-    elseif iter == 11
-        setName = 'GSP_behavior';
-    elseif iter == 12
-        setName = 'ADD_Health';
-    elseif iter == 13
+    elseif iter == 6
         setName = 'Car_Ris';
-    elseif iter == 14
-        setName = 'GSP_volume_log_divide';
-    elseif iter == 15
-        setName = 'GSP_volume_divide_prop';
-    elseif iter == 16
+    elseif iter == 7
         setName = 'GSP_volume_divide_power';% ICV
-    elseif iter == 17
-        setName = 'GSP_volume_divide_regres';
-    elseif iter == 18
-        setName = 'Kids';
-    elseif iter == 19
+    elseif iter == 8
         setName = 'Cortical';
-    elseif iter == 20
-        setName = 'simulated';
-    elseif iter == 21
+    elseif iter == 9
         setName = 'Cortical_corrected';
     end
     readData;
